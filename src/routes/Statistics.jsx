@@ -215,7 +215,7 @@ export default function Statistics () {
                             w={'90px'}
                         >
                             <Image
-                                src={thisMonth_1st.img}
+                                src={thisMonth_1st ? thisMonth_1st.img : REACT_APP_STEAMP_IMG_1}
                                 w={'90px'}
                                 h={'90px'}
                                 alignItems={'center'}
@@ -225,7 +225,7 @@ export default function Statistics () {
                                 fontSize={"12px"}
                                 textAlign={'center'}
                             >
-                                {thisMonth_1st.name}
+                                {thisMonth_1st ? thisMonth_1st.name : "없음"}
                             </Text>
 
                         </Box>
@@ -234,7 +234,7 @@ export default function Statistics () {
                             w={'75px'}
                         >
                             <Image
-                                src={thisMonth_2nd.img}
+                                src={thisMonth_2nd ? thisMonth_2nd.img : REACT_APP_STEAMP_IMG_1}
                                 w={'75px'}
                                 h={'75px'}
                                 alignItems={'center'}
@@ -245,7 +245,7 @@ export default function Statistics () {
                                 fontSize={"12px"}
                                 textAlign={'center'}
                             >
-                                {thisMonth_2nd.name}
+                                {thisMonth_2nd ? thisMonth_2nd.name : "없음"}
                             </Text>
 
                         </Box>
@@ -254,7 +254,7 @@ export default function Statistics () {
                             w={'50px'}
                         >
                             <Image
-                                src={thisMonth_3rd.img}
+                                src={thisMonth_3rd ? thisMonth_3rd.img : REACT_APP_STEAMP_IMG_1}
                                 w={'50px'}
                                 h={'50px'}
                                 alignItems={'center'}
@@ -265,7 +265,7 @@ export default function Statistics () {
                                 fontSize={"12px"}
                                 textAlign={'center'}
                             >
-                                {thisMonth_3rd.name}
+                                {thisMonth_3rd ? thisMonth_3rd.name : "없음"}
                             </Text>
 
                         </Box>
@@ -302,7 +302,7 @@ export default function Statistics () {
                                 color={'white'}
                                 textAlign={'center'}
                             >
-                                {total_1nd.name}
+                                {total_1nd ? total_1nd.name : "없음"}
                             </Text>
 
 
@@ -340,7 +340,7 @@ export default function Statistics () {
                                         2등
                                     </Text>
                                     <Image
-                                        src={total_2nd.img}
+                                        src={total_2nd ? total_2nd.img : REACT_APP_STEAMP_IMG_1}
                                         w={'50px'}
                                         alignItems={'center'}
                                     >
@@ -350,7 +350,7 @@ export default function Statistics () {
                                         color={'white'}
                                         textAlign={'center'}
                                     >
-                                        {total_2nd.name}
+                                        {total_2nd ? total_2nd.name : "없음"}
                                     </Text>
                                 </Box>
 
@@ -369,7 +369,7 @@ export default function Statistics () {
                                         3등
                                     </Text>
                                     <Image
-                                        src={total_3rd.img}
+                                        src={total_3rd ? total_3rd.img : REACT_APP_STEAMP_IMG_1}
                                         w={'50px'}
                                         alignItems={'center'}
                                     >
@@ -379,7 +379,7 @@ export default function Statistics () {
                                         color={'white'}
                                         textAlign={'center'}
                                     >
-                                        {total_3rd.name}
+                                        {total_3rd ? total_3rd.name : "없음"}
                                     </Text>
                                 </Box>
 
@@ -397,7 +397,7 @@ export default function Statistics () {
                                         4등
                                     </Text>
                                     <Image
-                                        src={total_4th.img}
+                                        src={total_4th ? total_4th.img : REACT_APP_STEAMP_IMG_1}
                                         w={'50px'}
                                         alignItems={'center'}
                                     >
@@ -407,7 +407,7 @@ export default function Statistics () {
                                         color={'white'}
                                         textAlign={'center'}
                                     >
-                                        {total_4th.name}
+                                        {total_4th ? total_4th.name : "없음"}
                                     </Text>
                                 </Box>
                             </HStack>

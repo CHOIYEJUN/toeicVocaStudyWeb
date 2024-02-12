@@ -98,7 +98,6 @@ const Calendar = (props) => {
         );
     };
 
-
     return (
         <Box w={"330px"}>
             <FullCalendar
