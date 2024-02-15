@@ -21,10 +21,10 @@ export default function TodayDone() {
     const onClick = (e) => {
         if(e.target.name === "myState"){
             navigation("/myState");
-        }else if(e.target.name === "outher") {
-            navigation("/checkOtherDay");
         }
     }
+    
+    
 
     return (
         <>
@@ -57,14 +57,6 @@ export default function TodayDone() {
 
                     >
                         와 현재 진행상황 볼래요 😊
-                    </Button>
-                    <Button
-                        w={'100%'}
-                        margin={'0 0 10px 0'}
-                        name={"outher"}
-                        onClick={onClick}
-                    >
-                        다른 날 것도 했어요 😁
                     </Button>
 
 

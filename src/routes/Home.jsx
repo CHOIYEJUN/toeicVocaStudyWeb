@@ -3,47 +3,22 @@ import {Title, Wrapper} from "../style/styles";
 import {useNavigate} from "react-router-dom";
 import Header from "../components/Header";
 import {insertStemp} from "../hooks/stempHook";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import CreateImgModal from "../components/imageModale/CreateImgModal";
 
 
 export default function () {
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
     const navigation = useNavigate();
     const tost = useToast();
     const onClick = (e) => {
         if(e.target.name === "yes"){
-            todayCheck();
-
+            setIsModalOpen(true);
         }else if(e.target.name === "no") {
             navigation("/notyet");
-        }else if(e.target.name === "outher"){
-            navigation("/checkOtherDay");
         }
     }
-
-
-    const todayCheck = async () => {
-        const insertStempState = await insertStemp();
-        if(insertStempState === "success"){
-            navigation("/todayDoen");
-        }else if(insertStempState === "fail") {
-            tost({
-                title: "오류",
-                description: "관리자에게 문의바랍니다.",
-                status: "error",
-                isClosable: true,
-            })
-        }else if(insertStempState === "already") {
-            tost({
-                title: "오류",
-                description: "이미 스탬프를 받았습니다",
-                status: "error",
-                isClosable: true,
-            })
-            navigation("/myState");
-        }
-    }
-
 
     return (
         <>
@@ -66,7 +41,6 @@ export default function () {
                     <Text
                         fontSize={'l'}
                         fontWeight={'bold'}
-
                     >
                     </Text>
 
@@ -86,15 +60,8 @@ export default function () {
                     >
                         아니요 아직이요! 😢
                     </Button>
-                    <Button
-                        w={'100%'}
-                        margin={'0 0 10px 0'}
-                        name={"outher"}
-                        onClick={onClick}
-                    >
-                        오늘이 아닌 다른 날 것 했어요 😁
-                    </Button>
 
+                    <CreateImgModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
                 </Wrapper>
             </Center>
         </>

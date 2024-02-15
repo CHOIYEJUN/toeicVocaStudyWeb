@@ -6,8 +6,6 @@ import TodayDone from "./routes/TodayDone";
 import NotYet from "./routes/NotYet";
 import MyState from "./routes/MyState";
 import PrivateRoute from "./components/PrivateRoute";
-import CheckOtherDay from "./routes/CheckOtherDay";
-import OtherDayDone from "./routes/OtherDayDone";
 import Statistics from "./routes/Statistics";
 import Admin from "./routes/Admin";
 
@@ -30,14 +28,6 @@ function App() {
         {
             path: "/myState",
             element: <PrivateRoute element={<MyState />} />,
-        },
-        {
-            path: "/checkOtherDay",
-            element: <PrivateRoute element={<CheckOtherDay />} />,
-        },
-        {
-            path: "/otherDayDone",
-            element: <PrivateRoute element={<OtherDayDone />} />,
         },
         {
             path: "/statistics",

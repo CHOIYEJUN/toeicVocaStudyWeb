@@ -3,8 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from '@fullcalendar/interaction';
 import {
     AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay,
-    Box, Button,
-    useDisclosure, useToast
+    Box, Button, Image, Text, useDisclosure, useToast
 } from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {deleteStemp, getStemp} from "../../hooks/stempHook";
@@ -16,6 +15,7 @@ export default function Calendar(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const [deleteDate, setDeleteDate] = useState(null);
+    const [stempImgSrc, setStempImgSrc] = useState("");
     const toast = useToast();
     let excellentNum = 0;
     let goodNum = 0;
@@ -45,6 +45,7 @@ export default function Calendar(props) {
                 start: item.quest_date,
                 display: "background",
                 name: item.user_name,
+                img_src: item.quest_img_url,
                 backgroundColor: item.quest_status === "excellent" ? "#5daf42" : "#e7b840"
             }
 
@@ -63,6 +64,7 @@ export default function Calendar(props) {
     const eventClick = (info) => {
         onOpen();
         setDeleteDate(info.event.startStr);
+        setStempImgSrc(info.event.extendedProps.img_src);
     }
     const onDeleteBtn = async () => {
         onClose();
@@ -125,19 +127,36 @@ export default function Calendar(props) {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            스탬프 삭제하기
+                            스탬프 확인하기
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            {deleteDate} 에 찍은 스탬프를 삭제하시겠습니까?
+                            <Text
+                                fontSize={'l'}
+                                fontWeight={'bold'}
+                                textAlign={'center'}
+                                m={'5px'}
+                            >
+                                {deleteDate} 에 올리신 이미지
+                            </Text>
+
+                            <Image
+                                margin={'0 auto'}
+                                src={stempImgSrc}
+                                maxW={'300px'}
+                                maxH={'500px'}
+                            />
                         </AlertDialogBody>
 
-                        <AlertDialogFooter>
+                        <AlertDialogFooter
+                            display={'flex'}
+                            justifyContent={'space-between'}
+                        >
                             <Button ref={cancelRef} onClick={onClose}>
-                                Cancel
+                                창 닫기
                             </Button>
                             <Button colorScheme='red' onClick={onDeleteBtn} ml={3}>
-                                Delete
+                                삭제하기
                             </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {addDoc, collection, doc, getDocs, where, query, setDoc, deleteDoc, getDoc} from "firebase/firestore";
 import {auth, DBservice} from "../fireBase";
 import {getToday} from "../util/DateUtil";
+import {getStorage, ref, deleteObject} from "firebase/storage";
 
 const todayString = getToday();
 const userID = localStorage.getItem("user_uid");
@@ -47,7 +48,7 @@ export const getStemp = async () => {
     }
 }
 
-export const insertStemp = async () => {
+export const insertStemp = async (questImgUrl, questImgPath) => {
 
     try {
 
@@ -67,6 +68,8 @@ export const insertStemp = async () => {
             uid: auth.currentUser.uid,
             user_name: auth.currentUser.displayName,
             quest_date: todayString,
+            quest_img_url: questImgUrl,
+            quest_img_path: questImgPath,
             quest_status: "excellent",
         });
         return "success";
@@ -129,12 +132,20 @@ export const deleteStemp = async (item) => {
             where("quest_date", "==", item)
         );
         const querySnapshot = await getDocs(steampQuery);
+
         querySnapshot.forEach((doc) => {
             deleteDoc(doc.ref);
         });
 
-        return "success";
+        // storage에서 이미지 삭제
+        const storage = getStorage();
+        //참고로 스토리지에 저장된 경로는 /QuestImage/uid/날짜/myImg 이다.
+        const imgPath = `QuestImage/${userID}/${item}/myImg`;
+        const imgRef = ref(storage, imgPath);
 
+        await deleteObject (imgRef);
+
+        return "success";
 
     }
     catch (error) {
