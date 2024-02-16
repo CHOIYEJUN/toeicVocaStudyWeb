@@ -131,7 +131,7 @@ export default function CreateAccount() {
                     <Title>회원가입</Title>
                         <Input
                             name = "username"
-                            placeholder = "닉네임"
+                            placeholder = "이름"
                             type = "text"
                             required
                             value = {username}
@@ -212,7 +212,7 @@ export default function CreateAccount() {
                     </InputGroup>
                         <Input
                             name = "accountNumber"
-                            placeholder = "계좌번호"
+                            placeholder = "계좌번호 하이픈(-) 제외"
                             type = "text"
                             required
                             value = {accountNumber}

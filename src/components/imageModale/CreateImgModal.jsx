@@ -6,7 +6,7 @@ import {
     ModalCloseButton,
     ModalBody,
     useToast,
-    Input, ModalFooter, Button, Box
+    Input, ModalFooter, Button, Box, Img
 } from '@chakra-ui/react';
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -16,10 +16,11 @@ import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
 export default function CreateImgModal ({isOpen, onClose }) {
     const [imgFile, setImgFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null); // 이미지 미리보기 URL을 위한 상태
+    const [isLoding, setIsLoding] = useState(false);
 
     const toast = useToast();
     const navigation = useNavigate();
-
+    const lodingImg = "https://firebasestorage.googleapis.com/v0/b/jujutoeicstudy.appspot.com/o/img%2Floding.gif?alt=media&token=8bcfd378-6519-4fbf-9df6-532a7d68277d";
 
     // 이미지 파일 상태가 변경될 때마다 미리보기를 생성
     useEffect(() => {
@@ -52,12 +53,13 @@ export default function CreateImgModal ({isOpen, onClose }) {
             });
             return;
         }
+        setIsLoding(true);
 
         const {url, imgPath} = await uploadImage(imgFile);
 
         if(url) {
             const insertStempState = await insertStemp(url, imgPath);
-
+            setIsLoding(false);
             if(insertStempState === "success"){
                 navigation("/todayDoen");
             }else if(insertStempState === "fail") {
@@ -83,6 +85,7 @@ export default function CreateImgModal ({isOpen, onClose }) {
                 status: "error",
                 isClosable: true,
             });
+            setIsLoding(false);
         }
        
     }
@@ -182,6 +185,22 @@ export default function CreateImgModal ({isOpen, onClose }) {
                     <Button colorScheme='blue' onClick={onClick}>등록하기</Button>
                 </ModalFooter>
             </ModalContent>
+
+            {isLoding && (
+                <Box
+                    position={'fixed'}
+                    top={'50%'}
+                    left={'50%'}
+                    transform={'translate(-50%, -50%)'}
+                    zIndex={'99999'}
+                >
+                    <Img
+                        w={'100px'}
+                        h={'100px'}
+                        src={lodingImg}
+                    />
+                </Box>
+            )}
         </Modal>
     )
 }
