@@ -11,7 +11,6 @@ export default function Admin(){
     const onClick = async (e) => {
         let childCheckData =  childComponentRef.current.getChildValue();
 
-
         const buttonName = e.target.name;
         if(childCheckData.length === 0) {
             toster({
@@ -68,7 +67,6 @@ export default function Admin(){
 
     }
 
-
     return (
         <>
             <VStack
@@ -80,27 +78,7 @@ export default function Admin(){
                 >
                     어드민 페이지
                 </Text>
-
                 <Calendar ref={childComponentRef}/>
-
-                <Button
-                    color={"white"}
-                    bg={"green"}
-                    name={"excellent"}
-                    onClick={onClick}
-                >
-                    당일 완료
-                </Button>
-
-                <Button
-                    color={"white"}
-                    bg={"orange"}
-                    name={"good"}
-                    onClick={onClick}
-                >
-                    나중에 완료
-                </Button>
-
             </VStack>
 
         </>

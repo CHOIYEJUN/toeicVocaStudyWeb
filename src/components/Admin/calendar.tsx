@@ -11,7 +11,7 @@ import {
     Button,
     Select, useDisclosure,
     useToast,
-    Text
+    Text, Img
 } from "@chakra-ui/react";
 import React, {useEffect, useRef, useState} from "react";
 
@@ -29,8 +29,18 @@ export const Calendar = forwardRef((props:any, ref:any) => {
     const [deleteDate, setDeleteDate] = useState<DeleteEvent>();
     const [users, setUsers] = useState<UserData[]>([]);
     const [newEvents, setNewEvents] = useState<Event[]>([]);
+    const [eventImgUrl, setEventImgUrl] = useState("");
     const [user_ID, setUser_ID] = useState("0");
     const [user_name, setUser_name] = useState("");
+    const [userData, setUserData] = useState({
+        account: "",
+        accountNumber : "",
+        accountOwner : "",
+        createdAt : "",
+        email : "",
+        uid : "",
+        username : "",
+    });
     const toster = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef<HTMLButtonElement>(null);
@@ -46,8 +56,13 @@ export const Calendar = forwardRef((props:any, ref:any) => {
     }, []);
 
     const onChange = (e : any) => {
-        setUser_ID(e.target.value)
-        setUser_name(e.target.options[e.target.selectedIndex].text);
+        const selectedUserID = e.target.value;
+        setUser_ID(selectedUserID);
+        const selectedUser = users.find(user => user.uid === selectedUserID);
+        if (selectedUser) {
+            setUser_name(selectedUser.username);
+            setUserData(selectedUser);
+        }
         getEvents(e.target.value);
     }
 
@@ -67,6 +82,8 @@ export const Calendar = forwardRef((props:any, ref:any) => {
                 isSend: false,
                 backgroundColor: item.quest_status === "excellent" ? "#529469" : "#b09964",
                 user_name: item.user_name,
+                quest_img_url : item.quest_img_url,
+                quest_img_path : item.quest_img_path
             }
         })
         setEvents(events);
@@ -104,15 +121,11 @@ export const Calendar = forwardRef((props:any, ref:any) => {
                     uid: user_ID,
                     user_name: user_name,
                 }
+                setEventImgUrl(isSelected.quest_img_url)
                 setDeleteDate(data);
             }
-        } else {
-            // 클릭한 날짜를 색깔로 표시하고 events에 추가
-            setSelectedDate(clickedDate);
-            setEvents([...events, {  start: clickedDate, display: "background", uid : user_ID , isSend : true, user_name: user_name } ]);
-            setNewEvents([...newEvents, {  start: clickedDate, display: "background", uid : user_ID , isSend : true, user_name: user_name} ]);
         }
-    };
+    }
 
     const eventClicker = (info : any) => {
 
@@ -189,20 +202,31 @@ export const Calendar = forwardRef((props:any, ref:any) => {
                 fixedWeekCount={false}
                 dateClick={dateClick}
                 events={events}
-                /*eventClick={eventClicker}*/
-
             />
 
             <Select
                 onChange={onChange}
-
             >
                 <option value={"0"}>유저를 선택해주세요</option>
-                {users.map((user) => {
-                    return <option key={user.uid} value={user.uid}>{user.username}</option>
-                })}
+                    {users.map((user) => {
+                        return <option key={user.uid} value={user.uid} >{user.username}</option>
+                    }
+                )}
 
             </Select>
+
+            <Box>
+                <Text fontSize={"medium"}>
+                     계좌 정보 : {userData.account} {userData.accountNumber} {userData.accountOwner}
+                </Text>
+                <Text fontSize={"medium"}>
+                    이메일 : {userData.email}
+                </Text>
+                <Text fontSize={"medium"}>
+                    가입일 : {userData.createdAt}
+                </Text>
+                
+            </Box>
 
             <AlertDialog
                 isOpen={isOpen}
@@ -212,12 +236,17 @@ export const Calendar = forwardRef((props:any, ref:any) => {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            스탬프 삭제하기
+                            스탬프 조회
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            <Text>"{user_name}" 님의,</Text>
-                            <Text>"{deleteDate?.start}" 에 찍힌 스탬프를 삭제하시겠습니까?</Text>
+                            <Text>"{deleteDate?.start}" 에 찍힌 "{user_name}" 님의 스탬프</Text>
+                            <Img
+                                src={eventImgUrl}
+                                maxWidth={"300px"}
+                                maxHeight={"500px"}
+                            />
+                            
                         </AlertDialogBody>
 
                         <AlertDialogFooter>

@@ -3,6 +3,8 @@ export type SteamType = {
     quest_status: string;
     uid: string;
     user_name: string;
+    quest_img_url : string;
+    quest_img_path : string;
 };
 
 export type Event = {
@@ -12,6 +14,8 @@ export type Event = {
     isSend: boolean;
     backgroundColor?: string;
     user_name: string;
+    quest_img_url : string;
+    quest_img_path : string;
 };
 
 export type DeleteEvent = {
