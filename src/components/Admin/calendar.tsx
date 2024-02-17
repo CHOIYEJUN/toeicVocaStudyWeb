@@ -215,9 +215,12 @@ export const Calendar = forwardRef((props:any, ref:any) => {
 
             </Select>
 
-            <Box>
+            <Box
+                margin={"10px 5px"}
+            >
+                <Text fontWeight={"bold"} margin={"10px 0"}> 유저 정보 </Text>
                 <Text fontSize={"medium"}>
-                     계좌 정보 : {userData.account} {userData.accountNumber} {userData.accountOwner}
+                    환불계좌 : {userData.account} {userData.accountNumber} {userData.accountOwner}
                 </Text>
                 <Text fontSize={"medium"}>
                     이메일 : {userData.email}

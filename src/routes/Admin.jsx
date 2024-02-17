@@ -1,13 +1,48 @@
-import {Button, Text, useToast, VStack} from "@chakra-ui/react";
+import {
+    Button, Input,
+    Modal, ModalBody, ModalCloseButton,
+    ModalContent, ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Text,
+    useDisclosure,
+    useToast,
+    VStack
+} from "@chakra-ui/react";
 import {Calendar} from "../components/Admin/calendar";
-import React, {forwardRef, useRef, useState} from "react";
+import React, {forwardRef, useEffect, useRef, useState} from "react";
 import {insertCheckAdminDay, insertCheckOtherDay} from "../hooks/stempHook";
 
 export default function Admin(){
 
+
     const childComponentRef = useRef();
     const toster = useToast();
+    const [passWord, setPassWord] = useState("");
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    // 페이지 진입 시 비밀번호 체크
+    useEffect(() => {
+        onOpen();
+    }, [])
 
+    const onClickPageCheck = (e) => {
+        const myPassWord = process.env.REACT_APP_ADMIN_PAGE_PASSWORD;
+        if(myPassWord === passWord) {
+            onClose();
+        }else {
+            toster({
+                title: "오류",
+                description: "비밀번호를 다시 확인해 주세요.",
+                status: "error",
+                isClosable: true,
+            })
+        }
+
+    }
+
+    const onChange = (e) => {
+        setPassWord(e.target.value);
+    }
     const onClick = async (e) => {
         let childCheckData =  childComponentRef.current.getChildValue();
 
@@ -80,6 +115,25 @@ export default function Admin(){
                 </Text>
                 <Calendar ref={childComponentRef}/>
             </VStack>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalBody>
+                        <Input
+                            value={passWord}
+                            type={"password"}
+                            placeholder={"비밀번호를 입력하세요"}
+                            onChange={onChange}
+                        />
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme='blue' onClick={onClickPageCheck}>확인</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
 
         </>
 
