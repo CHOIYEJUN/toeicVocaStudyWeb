@@ -71,9 +71,16 @@ export default function Statistics () {
 
     const currentSeampImg = (sortedScores) => {
         const today = new Date();
-        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -1);
+        let lastDay = null;
+        if(today.getMonth() === 1) {
+            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -17 );
+        }else {
+            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -1);
+        }
         const lastDayNum = lastDay.getDate();
         const maxScore = lastDayNum * 5;
+
+
 
         sortedScores.map((item, index) => {
             const myScore = item.score;
@@ -89,7 +96,7 @@ export default function Statistics () {
 
     const totleCurrentSeampImg = (sortedScores) => {
         const today = new Date();
-        const lastDay = new Date(2024, 0, 3 );
+        const lastDay = new Date(2024, 1, 17 );
         // 오늘에서 lastDay를 빼면 몇일이 지났는지 계산해야해
         const lastDayNum = Math.ceil((today.getTime() - lastDay.getTime()) / (1000 * 3600 * 24));
         const maxScore = lastDayNum * 5;

@@ -20,7 +20,7 @@ import {
 export default function MyState () {
 
     const userName = localStorage.getItem("user_name");
-    const startYMD = "2024-02-15";
+    const startYMD = "2024-02-17";
     // 오늘 날짜와 startYMD 를 비교해서 D + 몇일인지 계산하는 로직이 필요함
     const today = new Date();
     const start = new Date(startYMD);
@@ -45,8 +45,13 @@ export default function MyState () {
     }, [m_excellentCount, m_goodCount]);
 
     const carculationSteamp = () => {
+        let lastDay = null;
+        if(today.getMonth() === 1) {
+            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -17);
+        }else {
+            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -1);
+        }
 
-        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -1);
 
         const lastDayNum = lastDay.getDate();
         const maxScore = lastDayNum * 5;
@@ -112,16 +117,9 @@ export default function MyState () {
                         fontWeght={'bold'}
                         m={'5px 0 0 0'}
                     >
-                        총 <span style={{color:"green"}}>{excellentCount}</span> 개의  <span style={{background:"#E5F4D4"}}>"참 잘했어요"</span>
+                        총 <span style={{color:"green"}}>{excellentCount}</span> 개의  <span style={{background:"#E5F4D4"}}>"참 잘했어요"</span>를 획득했습니다.
                     </Text>
-                    <Text
-                        fontSize={'l'}
-                        fontWeght={'bold'}
-                        m={'5px 0 0 0'}
-                    >
-                        총 <span style={{color:"#faa47a"}}>{goodCount}</span> 개의
-                         <span style={{background:"#FFEAE0"}}>"잘했어요"</span> 를 획득했습니다.
-                    </Text>
+
                 </center>
                 <HStack
                     m={'10px 0'}
