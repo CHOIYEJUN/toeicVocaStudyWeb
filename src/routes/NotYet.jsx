@@ -19,7 +19,7 @@ export default function NotYet() {
                 const now = new Date();
                 const tomorrow = new Date(now);
                 tomorrow.setDate(now.getDate() + 1);
-                tomorrow.setHours(0, 0, 0, 0);
+                tomorrow.setHours(10, 0, 0, 0);
 
                 const timeDiff = tomorrow - now;
 
