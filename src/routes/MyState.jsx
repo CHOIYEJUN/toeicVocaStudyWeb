@@ -19,8 +19,9 @@ import {
 
 export default function MyState () {
 
+
     const userName = localStorage.getItem("user_name");
-    const startYMD = "2024-02-17";
+    const startYMD = localStorage.getItem("createdAt");
     // 오늘 날짜와 startYMD 를 비교해서 D + 몇일인지 계산하는 로직이 필요함
     const today = new Date();
     const start = new Date(startYMD);
@@ -44,14 +45,14 @@ export default function MyState () {
 
     }, [m_excellentCount, m_goodCount]);
 
+
     const carculationSteamp = () => {
         let lastDay = null;
-        if(today.getMonth() === 1) {
-            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -17);
+        if(today.getMonth() === start.getMonth()) {
+            lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() - start.getDate())
         }else {
             lastDay = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() -1);
         }
-
 
         const lastDayNum = lastDay.getDate();
         const maxScore = lastDayNum * 5;

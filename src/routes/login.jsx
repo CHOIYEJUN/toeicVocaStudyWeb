@@ -97,20 +97,16 @@ export default function Login() {
             const userDoc = doc(DBservice, "users" ,loginValue.user.uid );
 
             getDoc(userDoc).then((docSnap) => {
-                if (docSnap.exists()) {
-                    console.log("Document data:", docSnap.data());
                     localStorage.setItem("belong", docSnap.data().belong);
                     localStorage.setItem("startDay", docSnap.data().startDay);
-                } else {
-                    console.log("No such document!");
-                }
+                    localStorage.setItem("createdAt", docSnap.data().createdAt);
+
+                    seveUserInfoLocalStorage(loginValue.user);
+                    window.location.replace("/");
+                    setLoading(false);
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
-
-            seveUserInfoLocalStorage(loginValue.user);
-            window.location.replace("/");
-            setLoading(false);
         }catch (e){
 
             toast({

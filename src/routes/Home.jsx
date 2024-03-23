@@ -8,6 +8,7 @@ import CreateImgModal from "../components/imageModale/CreateImgModal";
 
 
 export default function () {
+
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
     const navigation = useNavigate();
